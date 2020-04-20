@@ -1,32 +1,55 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="mvvm">
+      <router-view/>
     </div>
-    <router-view/>
+    <div class="nav">
+      <van-tabbar v-model="active" @change="onChange">
+      <van-tabbar-item name="home" icon="home-o">首页</van-tabbar-item>
+      <van-tabbar-item name="classify" icon="search">分类</van-tabbar-item>
+      <van-tabbar-item icon="friends-o">购物车</van-tabbar-item>
+      <van-tabbar-item icon="setting-o">个人</van-tabbar-item>
+      </van-tabbar>
+    </div>
   </div>
 </template>
 
+<script>
+export default {
+  data(){
+    return{
+      active:''
+    }
+  },
+  methods: {
+    onChange() {
+      if(this.active=='home'){
+        this.$router.push('/')
+      }else if(this.active == 'classify'){
+        this.$router.push('/classify')
+      }
+    },
+  },
+  mounted(){
+    this.$store.dispatch('getData')
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+*
+{
+  margin:0
 }
-
-#nav {
-  padding: 30px;
+.mvvm
+{
+  width:100%;
+  height:92vh;
+  /* background:pink; */
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.nav
+{
+  width:100%;
+  height:8vh;
 }
 </style>
